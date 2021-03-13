@@ -1,0 +1,55 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background: url(../img/dz2.jpg);
+	background-size:cover ;
+}
+#bottom{
+	position: absolute;
+	bottom: 0;
+	background: aqua;
+	height: 60px;
+	min-width: 100%;
+}
+.start,.stop{
+	float: left;
+	height: 40px;
+	width: 100px;
+	margin-left:50px;
+	margin-top:10px;
+	background:url(../img/stop.png) ;
+	background-size:100px 50px ;
+	text-align: center;
+	line-height: 50px;
+}
+#socre{
+	width:200px;
+	height: 300px;
+	position: absolute;
+	bottom: 50px;
+	right: 0px;
+	background-image: url(../img/fs.png);
+	background-size:200px 300px;
+	text-align: center;
+	line-height: 230px;
+	font-size: 40px;
+}
+#lose{
+	width: 500px;
+	height: 300px;
+	position: absolute;
+	background-image: url(../img/sp1.png);
+	background-size:500px 300px ;
+	left:40%;
+	top:-60%;
+}
+@keyframes drop{
+	from{top:-60%}
+	to{top:0px}
+}
+@keyframes up{
+	from{top:0%}
+	to{top: -60%}
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>打字小游戏</title>
+		<link rel="stylesheet" type="text/css" href="css/小游戏.css"/>
+	</head>
+	<body>
+		<div id="lose" onclick="restart()">
+			
+		</div>
+          <div id="bottom">
+          	<div class="stop" onclick="stop()">暂停游戏</div>
+          	<div class="start" onclick="start()">开始游戏</div>
+          </div>
+          <div id="socre">
+          	0
+          </div>
+	</body>
+	<script>
+		var arr = [];
+		var sorce = 0;
+		var a = "";
+		var b = "";
+		var n = 0;
+		var m = 0;
+		var flag = true;
+		function start(){
+			 var p = document.getElementById("socre");
+			 document.getElementsByClassName("start")[0].innerHTML="重新开始"
+			 var lose = document.getElementById("lose");
+			 lose.style.animation="up 0s forwards";
+			 if(n!=0){
+			 	for(var i=0;i<arr.length;i++){
+							arr[i].parentNode.removeChild(arr[i]);
+						}
+			 			sorce=0;
+						arr.splice(0,arr.length);
+						clearInterval(a);
+						clearInterval(b);
+						p.innerHTML = sorce;
+						n = 0;
+						start();
+						
+						
+			 }else{
+			 	a = setInterval("appear()",1000);
+			    b = setInterval("down()",500);
+			    for(var i=0;i<arr.length;i++){
+					arr[i].parentNode.removeChild(arr[i]);
+				}
+	 			sorce=0;
+	 			p.innerHTML = sorce;
+				arr.splice(0,arr.length);
+			 	n++;
+			 	flag = true;
+			 }
+		}
+		function appear(){
+			var img = document.createElement("img");
+			var bian = Math.ceil(Math.random()*25+65);
+			var letter = String.fromCharCode(bian);
+			img.name = letter;
+			img.src="img/"+letter+".png";
+			img.style.position="absolute";
+			var wei = Math.ceil(Math.random()*90);
+			img.style.left=wei+"%"
+			img.style.top = 0;
+			arr.push(img);
+			document.body.appendChild(img);
+		}
+		function stop(){
+			
+			if(n>0){
+				flag = false;
+				clearInterval(a);
+				clearInterval(b);
+				n = 0;
+				document.getElementsByClassName("stop")[0].innerHTML="继续游戏";
+			}
+			else{
+				flag = true;
+				a = setInterval("appear()",1000);
+			    b = setInterval("down()",500);
+				document.getElementsByClassName("stop")[0].innerHTML="暂停游戏";
+				n++;
+			}
+			
+			
+			
+		}
+		function down(){
+			var p = document.getElementById("socre");
+			for(var i=0;i<arr.length;i++){
+				var top = getTop(arr[i].style.top);
+				if(top >= 500){
+					arr[i].parentElement.removeChild(arr[i]);
+					arr.splice(i,1);
+					sorce --;
+					if(sorce<0){
+						for(var i=0;i<arr.length;i++){
+							arr[i].parentNode.removeChild(arr[i]);
+						}
+						arr.splice(0,arr.length);
+						sorce=0;
+						clearInterval(a);
+						clearInterval(b);
+						var lose = document.getElementById("lose");
+						lose.style.animation="drop 2s forwards";	
+						n=0;
+					}
+					p.innerHTML = sorce;
+				}
+				else{
+					arr[i].style.top = top+50+"px";
+				}
+			}
+		}
+		function getTop(top){
+			var nu = new Number(top.substring(0,top.indexOf("p")))
+			return nu;
+		}
+
+		window.onkeypress=function(e){
+		if(flag==true){
+				var p = document.getElementById("socre");
+				var x = String.fromCharCode(e.keyCode).toUpperCase();
+				for(var i =0;i<arr.length;i++){
+					if(arr[i].name==x){
+						arr[i].parentElement.removeChild(arr[i]);
+						arr.splice(i,1);
+						sorce ++;
+						p.innerHTML = sorce;
+						break;
+				}
+			
+			}
+          
+		}
+	}
+	
+		function restart(){
+			n = 0;
+			var lose = document.getElementById("lose");
+			lose.style.animation="up 2s forwards";
+			start();
+		}
+		
+	</script>
+</html>
